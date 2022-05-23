@@ -6,5 +6,5 @@
         acima ou abaixo do peso desejado.\n\nPreencha os campos de peso e altura para descobrir o seu IMC</string>
     <string name="weight">Peso (Kg)</string>
     <string name="height">Altura (cm)</string>
-    <string name="cal">Calcular</string>
+    <string name="calc">Calcular</string>
 </resources>
