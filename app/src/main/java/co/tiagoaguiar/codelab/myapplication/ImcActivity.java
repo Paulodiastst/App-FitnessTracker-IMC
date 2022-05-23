@@ -1,8 +1,10 @@
 package co.tiagoaguiar.codelab.myapplication;
 
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.icu.number.IntegerWidth;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,7 +48,16 @@ public class ImcActivity extends AppCompatActivity {
 
                 int imcResponseId = imcResponse(result);
 
-                Toast.makeText(ImcActivity.this, imcResponseId, Toast.LENGTH_SHORT).show();
+                AlertDialog dialog = new AlertDialog.Builder(ImcActivity.this)
+                        .setTitle(getString(R.string.imc_response, result))
+                        .setMessage(imcResponseId)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .create();
+                dialog.show();
             }
         });
     }
@@ -69,16 +80,16 @@ public class ImcActivity extends AppCompatActivity {
             return R.string.imc_severely_high_weight;
         else
             return R.string.imc_extreme_weight;
-        }
+    }
 
     private double calculateImc(int height, int weight) {
         // peso / (altura * altura)
-        return weight / ( ((double) height / 100) * ((double) height / 100) );
+        return weight / (((double) height / 100) * ((double) height / 100));
     }
 
-                // Para que seja valido não deve comerçar com 0 e não deve ser vazio.
+    // Para que seja valido não deve comerçar com 0 e não deve ser vazio.
     private boolean validate() {
-        return  (!editHeight.getText().toString().startsWith("0")
+        return (!editHeight.getText().toString().startsWith("0")
                 && !editWeight.getText().toString().startsWith("0")
                 && !editHeight.getText().toString().isEmpty()
                 && !editWeight.getText().toString().isEmpty());

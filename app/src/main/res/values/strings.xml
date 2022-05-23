@@ -20,5 +20,6 @@
     <string name="imc_extreme_weight">Extremamente obeso</string>
 
 
+    <string name="imc_response">Imc: %1$.2f</string>
 
 </resources>
