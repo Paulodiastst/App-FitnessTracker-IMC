@@ -22,6 +22,7 @@ android {
         }
     }
     namespace 'co.tiagoaguiar.codelab.myapplication'
+
 }
 
 dependencies {
