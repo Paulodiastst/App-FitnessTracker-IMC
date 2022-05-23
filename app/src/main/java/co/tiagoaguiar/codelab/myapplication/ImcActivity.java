@@ -4,11 +4,13 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.icu.number.IntegerWidth;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -58,6 +60,10 @@ public class ImcActivity extends AppCompatActivity {
                         })
                         .create();
                 dialog.show();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editWeight.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(editHeight.getWindowToken(), 0);
             }
         });
     }
