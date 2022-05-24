@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
         mainItems.add(new MainItem(1, R.drawable.ic_baseline_wb_sunny_24, R.string.label_imc, Color.GREEN));
         mainItems.add(new MainItem(2, R.drawable.ic_baseline_visibility_24, R.string.label_tmb, Color.YELLOW));
 
+
         // 1 -> Definir o comportamento de exibição do layout da recyclerview
         // mosaic
         // grid
         // linear (horizontal | vertical)
-        rvMain.setLayoutManager(new LinearLayoutManager(this));
+        rvMain.setLayoutManager(new GridLayoutManager(this, 2));
         MainAdpter adpter = new MainAdpter(mainItems);
         rvMain.setAdapter(adpter);
 
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         public void bind(MainItem item) {
             TextView txtName = itemView.findViewById(R.id.item_txt_name);
             ImageView imageIcon = itemView.findViewById(R.id.item_img_icon);
-            LinearLayout container = (LinearLayout) itemView;
+            LinearLayout container = (LinearLayout) itemView.findViewById(R.id.btn_imc);
 
 
             txtName.setText(item.getTextStringId());
