@@ -21,7 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private View btnImc;
     private RecyclerView rvMain;
 
     @Override
@@ -29,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //btnImc = findViewById(R.id.btn_imc);
         rvMain = findViewById(R.id.main_rv);
 
         List<MainItem> mainItems = new ArrayList<>();
@@ -42,21 +40,32 @@ public class MainActivity extends AppCompatActivity {
         // grid
         // linear (horizontal | vertical)
         rvMain.setLayoutManager(new GridLayoutManager(this, 2));
-        MainAdpter adpter = new MainAdpter(mainItems);
-        rvMain.setAdapter(adpter);
+        MainAdpter adapter = new MainAdpter(mainItems);
+        adapter.setListener( id -> {
+            switch (id) {
+                case 1:
+                    startActivity(new Intent(MainActivity.this, ImcActivity.class));
+                    break;
+                case 2:
+                    startActivity(new Intent(MainActivity.this, TmbActivity.class));
+                    break;
+            }
+        });
+        rvMain.setAdapter(adapter);
 
-        //btnImc.setOnClickListener(view -> {
-        //Intent intent = new Intent(MainActivity.this, ImcActivity.class);
-        //startActivity(intent);
-        //});
     }
 
-    private class MainAdpter extends RecyclerView.Adapter<MainViewHolder> {
+    private class MainAdpter extends RecyclerView.Adapter<MainAdpter.MainViewHolder> {
 
         private List<MainItem> mainItems;
+        private OnItemClickListener listener;
 
         public MainAdpter(List<MainItem> mainItems) {
             this.mainItems = mainItems;
+        }
+
+        public void setListener(OnItemClickListener listener) {
+            this.listener = listener;
         }
 
         @NonNull
@@ -73,29 +82,32 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
+
             return mainItems.size();
         }
-    }
 
-    // Entenda com sendo a VIEW DA CELULA que está dentro do RecyclerView
-    private class MainViewHolder extends RecyclerView.ViewHolder {
+        // Entenda com sendo a VIEW DA CELULA que está dentro do RecyclerView
+        private class MainViewHolder extends RecyclerView.ViewHolder {
 
-        public MainViewHolder(@NonNull View itemView) {
-            super(itemView);
+            public MainViewHolder(@NonNull View itemView) {
+                super(itemView);
+            }
+
+            public void bind(MainItem item) {
+                TextView txtName = itemView.findViewById(R.id.item_txt_name);
+                ImageView imageIcon = itemView.findViewById(R.id.item_img_icon);
+                LinearLayout btnImc = (LinearLayout) itemView.findViewById(R.id.btn_imc);
+
+                btnImc.setOnClickListener(view -> {
+                    listener.onClick(item.getId());
+                });
+
+                txtName.setText(item.getTextStringId());
+                imageIcon.setImageResource(item.getDrawableId());
+                btnImc.setBackgroundColor(item.getColor());
+
+            }
         }
 
-        public void bind(MainItem item) {
-            TextView txtName = itemView.findViewById(R.id.item_txt_name);
-            ImageView imageIcon = itemView.findViewById(R.id.item_img_icon);
-            LinearLayout container = (LinearLayout) itemView.findViewById(R.id.btn_imc);
-
-
-            txtName.setText(item.getTextStringId());
-            imageIcon.setImageResource(item.getDrawableId());
-            container.setBackgroundColor(item.getColor());
-
-        }
-
     }
-
 }
